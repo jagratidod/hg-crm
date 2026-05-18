@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Super Admin",
+    "phone": "9999999999",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "name": "Rahul Sharma",
+    "phone": "8888888888",
+    "role": "customer"
+  },
+  {
+    "id": 3,
+    "name": "Technician Amit",
+    "phone": "7777777777",
+    "role": "employee"
+  },
+  {
+    "id": 4,
+    "name": "Store Manager",
+    "phone": "6666666666",
+    "role": "inventory"
+  }
+]

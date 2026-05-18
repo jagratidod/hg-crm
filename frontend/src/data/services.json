@@ -1,0 +1,30 @@
+[
+  {
+    "id": "REQ-092",
+    "customerId": 2,
+    "productId": "PRD-001",
+    "type": "Polish & Cleaning",
+    "description": "Ring has lost its shine, needs deep cleaning and polishing.",
+    "priority": "High",
+    "status": "Assigned",
+    "assignedTo": 3,
+    "createdAt": "2026-05-15T10:00:00Z",
+    "preferredDate": "2026-05-16",
+    "pickupRequired": true,
+    "address": "12A, Phase 2, Diamond Valley"
+  },
+  {
+    "id": "REQ-094",
+    "customerId": 2,
+    "productId": "PRD-002",
+    "type": "Stone Fixing",
+    "description": "One small diamond fell out.",
+    "priority": "Medium",
+    "status": "Pending",
+    "assignedTo": null,
+    "createdAt": "2026-05-16T08:30:00Z",
+    "preferredDate": "2026-05-18",
+    "pickupRequired": false,
+    "address": "45B, Gold Enclave"
+  }
+]

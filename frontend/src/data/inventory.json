@@ -1,0 +1,36 @@
+{
+  "tools": [
+    {
+      "id": "TL-001",
+      "name": "Professional Polishing Machine",
+      "category": "Machine",
+      "status": "Available",
+      "assignedTo": null,
+      "qrCode": "QR-TL001"
+    },
+    {
+      "id": "TL-002",
+      "name": "Diamond Stone Kit",
+      "category": "Kit",
+      "status": "In Use",
+      "assignedTo": 3,
+      "qrCode": "QR-TL002"
+    }
+  ],
+  "consumables": [
+    {
+      "id": "CS-001",
+      "name": "Gold Cleaning Solution",
+      "unit": "Liters",
+      "stock": 5.5,
+      "minStock": 2.0
+    },
+    {
+      "id": "CS-002",
+      "name": "Microfiber Cloths",
+      "unit": "Pieces",
+      "stock": 12,
+      "minStock": 20
+    }
+  ]
+}

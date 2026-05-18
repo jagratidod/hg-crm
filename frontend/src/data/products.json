@@ -1,0 +1,24 @@
+[
+  {
+    "id": "PRD-001",
+    "customerId": 2,
+    "name": "Diamond Engagement Ring",
+    "type": "Ring",
+    "metalType": "Gold 18K",
+    "weight": "12g",
+    "purchaseDate": "2023-05-12",
+    "warrantyUntil": "2025-05-12",
+    "image": "💍"
+  },
+  {
+    "id": "PRD-002",
+    "customerId": 2,
+    "name": "Gold Chain Necklace",
+    "type": "Necklace",
+    "metalType": "Gold 22K",
+    "weight": "45g",
+    "purchaseDate": "2024-01-20",
+    "warrantyUntil": "2026-01-20",
+    "image": "📿"
+  }
+]

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-hg-gold-light: #E0CEAD;
+  --color-hg-gold-beige: #AFA490;
+  --color-hg-dark-gold: #645E52;
+  --color-hg-cream: #FAF6D8;
+  --color-hg-black: #1F1B14;
+  --color-hg-accent: #C9A84C;
+  --color-hg-danger: #C0392B;
+  --color-hg-success: #27AE60;
+  --color-hg-bg: #15120d;
+  --color-hg-card: #1F1B14;
+}
+
+:root {
+  --hg-black: #1F1B14;
+  --hg-gold-light: #E0CEAD;
+  --hg-gold-beige: #AFA490;
+  --hg-dark-gold: #645E52;
+  --hg-cream: #FAF6D8;
+  --hg-accent: #C9A84C;
+  
+  --bg-main: #15120d;
+  --text-main: #FAF6D8;
+  --text-muted: #AFA490;
+}
+
+body {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--hg-dark-gold); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hg-gold-beige); 
+}
+
+/* Hide scrollbar for clean UI where needed */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Remove default outline on focus, use custom gold */
+*:focus-visible {
+  outline: 2px solid var(--hg-accent);
+  outline-offset: 2px;
+}
+
+/* Utility to ensure text colors match backgrounds */
+.glass-panel {
+  background: rgba(31, 27, 20, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(224, 206, 173, 0.1);
+}
