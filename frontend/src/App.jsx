@@ -4,29 +4,30 @@ import { Toaster } from 'react-hot-toast';
 // Landing
 import LandingPage from './panels/landing/LandingPage';
 
-// Login Pages
-import Login from './auth/Login';
+// Complete Luxury Login Screen Module
+import LoginScreen from './panels/admin/pages/LoginScreen';
 
-// Layouts
+// Unified Luxury Layout
 import AdminLayout from './panels/admin/AdminLayout';
 import EmployeeLayout from './panels/employee/EmployeeLayout';
 import InventoryLayout from './panels/inventory/InventoryLayout';
 import CustomerLayout from './panels/customer/CustomerLayout';
 
-// Store
-import useAuthStore from './store/authStore';
+// State Store
+import useErpStore from './store/erpStore';
 
-// Simple Protected Route wrapper
+// Protected Route wrapper with role authorizations
 const ProtectedRoute = ({ children, allowedRole }) => {
-  const { role, isLoggedIn } = useAuthStore();
+  const { role, isLoggedIn } = useErpStore();
   
   if (!isLoggedIn) {
-    return <Navigate to={`/${allowedRole}/login`} replace />;
+    // If not logged in, route to default admin login
+    return <Navigate to="/admin/login" replace />;
   }
   
-  if (role !== allowedRole && role !== 'admin') {
-     // Admin can access anything for testing
-    return <Navigate to={`/${role}`} replace />;
+  // Super Admin can access everything for testing and evaluation
+  if (role !== 'Super Admin' && allowedRole === 'admin' && role !== 'admin') {
+    return <Navigate to="/admin/login" replace />;
   }
   
   return children;
@@ -35,49 +36,40 @@ const ProtectedRoute = ({ children, allowedRole }) => {
 function App() {
   return (
     <BrowserRouter>
+      {/* Toast configurations aligned with luxury theme */}
       <Toaster position="top-right" toastOptions={{
         style: {
-          background: '#1F1B14',
-          color: '#E0CEAD',
-          border: '1px solid #645E52',
+          background: '#0F0F0F',
+          color: '#FFFFFF',
+          border: '1px solid #D4AF37',
+          borderRadius: '12px',
+          fontSize: '12px',
+          fontFamily: 'Outfit, sans-serif'
         }
       }} />
+      
       <Routes>
+        {/* Landing Page */}
         <Route path="/" element={<LandingPage />} />
         
-        {/* Auth Routes */}
-        <Route path="/admin/login" element={<Login role="admin" />} />
-        <Route path="/employee/login" element={<Login role="employee" />} />
-        <Route path="/inventory/login" element={<Login role="inventory" />} />
-        <Route path="/customer/login" element={<Login role="customer" />} />
+        {/* Auth Entrypoints */}
+        <Route path="/admin/login" element={<LoginScreen />} />
+        <Route path="/employee/login" element={<LoginScreen />} />
+        <Route path="/inventory/login" element={<LoginScreen />} />
+        <Route path="/customer/login" element={<LoginScreen />} />
 
-        {/* Admin Panel Routes */}
+        {/* Master Admin Portal: Hosts all 18 Jewellery Manufacturing ERP modules */}
         <Route path="/admin/*" element={
           <ProtectedRoute allowedRole="admin">
             <AdminLayout />
           </ProtectedRoute>
         } />
 
-        {/* Employee Panel Routes */}
-        <Route path="/employee/*" element={
-          <ProtectedRoute allowedRole="employee">
-            <EmployeeLayout />
-          </ProtectedRoute>
-        } />
-
-        {/* Inventory Panel Routes */}
-        <Route path="/inventory/*" element={
-          <ProtectedRoute allowedRole="inventory">
-            <InventoryLayout />
-          </ProtectedRoute>
-        } />
-
-        {/* Customer Panel Routes */}
-        <Route path="/customer/*" element={
-          <ProtectedRoute allowedRole="customer">
-            <CustomerLayout />
-          </ProtectedRoute>
-        } />
+        {/* Fallbacks */}
+        <Route path="/employee/*" element={<Navigate to="/admin" replace />} />
+        <Route path="/inventory/*" element={<Navigate to="/admin" replace />} />
+        <Route path="/customer/*" element={<Navigate to="/admin" replace />} />
+        <Route path="*" element={<Navigate to="/admin" replace />} />
       </Routes>
     </BrowserRouter>
   )
