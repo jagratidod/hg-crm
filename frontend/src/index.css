@@ -18,25 +18,162 @@
 }
 
 :root {
+  --bg-panel: #0A0A0A;
+  --bg-sidebar: #0F0F0F;
+  --bg-card: rgba(31, 27, 20, 0.6);
+  --text-primary: #FFFFFF;
+  --text-secondary: #C5B396;
+  --border-color: rgba(142, 122, 90, 0.25);
+  --bg-input: #121212;
+  
   --hg-black: #1F1B14;
   --hg-gold-light: #E0CEAD;
   --hg-gold-beige: #AFA490;
   --hg-dark-gold: #645E52;
   --hg-cream: #FAF6D8;
   --hg-accent: #C9A84C;
+
+  --bg-main: var(--bg-panel);
+  --text-main: var(--text-primary);
+  --text-muted: var(--text-secondary);
+}
+
+[data-theme="light"] {
+  --bg-panel: #FAF9F5;
+  --bg-sidebar: #EFECE3;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --text-primary: #1C1A17;
+  --text-secondary: #70634E;
+  --border-color: rgba(142, 122, 90, 0.35);
+  --bg-input: #FFFFFF;
   
-  --bg-main: #15120d;
-  --text-main: #FAF6D8;
-  --text-muted: #AFA490;
+  --hg-black: #FFFFFF;
+  --hg-gold-light: #70634E;
+  --hg-gold-beige: #8E7A5A;
+  --hg-dark-gold: #AFA490;
+  --hg-cream: #1C1A17;
+  
+  --bg-main: var(--bg-panel);
+  --text-main: var(--text-primary);
+  --text-muted: var(--text-secondary);
 }
 
 body {
   margin: 0;
   font-family: "Outfit", sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-main);
+  background-color: var(--bg-panel);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Global Page Overrides when light mode is enabled */
+[data-theme="light"] .text-white,
+[data-theme="light"] .text-white * {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-\[\#C5B396\] {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .bg-\[\#0A0A0A\],
+[data-theme="light"] .bg-black\/10 {
+  background-color: var(--bg-panel) !important;
+}
+
+[data-theme="light"] .bg-\[\#0F0F0F\],
+[data-theme="light"] .bg-black\/40 {
+  background-color: var(--bg-sidebar) !important;
+}
+
+[data-theme="light"] .bg-black\/20,
+[data-theme="light"] .bg-black\/30,
+[data-theme="light"] .bg-black\/25,
+[data-theme="light"] .bg-black\/65,
+[data-theme="light"] .bg-\[\#161616\],
+[data-theme="light"] .bg-\[\#121212\] {
+  background-color: var(--bg-input) !important;
+}
+
+[data-theme="light"] .bg-black\/60,
+[data-theme="light"] .bg-black\/45 {
+  background-color: rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="light"] tr.bg-black\/80,
+[data-theme="light"] tr.bg-black\/65,
+[data-theme="light"] tr.bg-black\/60,
+[data-theme="light"] tr.bg-black\/40 {
+  background-color: var(--bg-sidebar) !important;
+}
+
+[data-theme="light"] .border-\[\#8E7A5A\]\/25,
+[data-theme="light"] .border-\[\#8E7A5A\]\/20,
+[data-theme="light"] .border-\[\#8E7A5A\]\/15,
+[data-theme="light"] .border-\[\#8E7A5A\]\/10,
+[data-theme="light"] .border-white\/5 {
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] strong.text-white {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .hover\:bg-white\/5:hover {
+  background-color: rgba(142, 122, 90, 0.1) !important;
+}
+
+[data-theme="light"] select,
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Landing page theme (light/dark) */
+[data-lp-theme="dark"] {
+  --lp-bg: #1A1610;
+  --lp-surface: #1F1B14;
+  --lp-card: #2A2621;
+  --lp-hero-bg: #0D0B08;
+  --lp-hero-text: #FAF6D8;
+  --lp-hero-muted: #AFA490;
+  --lp-hero-border: rgba(224, 206, 173, 0.16);
+  --lp-border: rgba(224, 206, 173, 0.16);
+  --lp-muted: #AFA490;
+  --lp-link: #E0CEAD;
+  --lp-cta-bg: #C9A84C;
+  --lp-cta-text: #0B0B0B;
+  --lp-input-bg: rgba(0, 0, 0, 0.25);
+}
+
+[data-lp-theme="light"] {
+  --lp-bg: #FCFAF6;
+  --lp-surface: #F5F1E6;
+  --lp-card: #FFFFFF;
+  --lp-hero-bg: #FFFFFF;
+  --lp-hero-text: #1F1B14;
+  --lp-hero-muted: #83755E;
+  --lp-hero-border: rgba(212, 175, 55, 0.25);
+  --lp-border: rgba(212, 175, 55, 0.2);
+  --lp-muted: #83755E;
+  --lp-link: #1F1B14;
+  --lp-cta-bg: #D4AF37;
+  --lp-cta-text: #000000;
+  --lp-input-bg: rgba(212, 175, 55, 0.08);
+}
+
+/* Custom Select styles to avoid ugly OS default styling in dark/light mode */
+select option {
+  background-color: #0F0F0F !important;
+  color: #FFFFFF !important;
+}
+[data-lp-theme="light"] select option {
+  background-color: #FCFAF6 !important;
+  color: #1F1B14 !important;
 }
 
 /* Custom scrollbar */
@@ -44,21 +181,25 @@ body {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--bg-main); 
+  background: var(--bg-main);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--hg-dark-gold); 
+  background: var(--hg-dark-gold);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--hg-gold-beige); 
+  background: var(--hg-gold-beige);
 }
 
 /* Hide scrollbar for clean UI where needed */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -72,8 +213,20 @@ body {
 
 /* Utility to ensure text colors match backgrounds */
 .glass-panel {
-  background: rgba(31, 27, 20, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(224, 206, 173, 0.1);
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--border-color) !important;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* When used inside LandingPage, adapt glass to the selected landing theme */
+[data-lp-theme="light"] .glass-panel {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1px solid rgba(17, 24, 39, 0.12) !important;
+}
+
+[data-lp-theme="dark"] .glass-panel {
+  background: rgba(31, 27, 20, 0.6) !important;
+  border: 1px solid rgba(224, 206, 173, 0.1) !important;
 }
