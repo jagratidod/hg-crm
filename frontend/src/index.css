@@ -25,13 +25,33 @@
   --text-secondary: #C5B396;
   --border-color: rgba(142, 122, 90, 0.25);
   --bg-input: #121212;
-  
+
   --hg-black: #1F1B14;
   --hg-gold-light: #E0CEAD;
   --hg-gold-beige: #AFA490;
   --hg-dark-gold: #645E52;
   --hg-cream: #FAF6D8;
   --hg-accent: #C9A84C;
+
+  --bg-main: var(--bg-panel);
+  --text-main: var(--text-primary);
+  --text-muted: var(--text-secondary);
+}
+
+[data-theme="light"] {
+  --bg-panel: #FAF9F5;
+  --bg-sidebar: #EFECE3;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --text-primary: #1C1A17;
+  --text-secondary: #70634E;
+  --border-color: rgba(142, 122, 90, 0.35);
+  --bg-input: #FFFFFF;
+
+  --hg-black: #FFFFFF;
+  --hg-gold-light: #70634E;
+  --hg-gold-beige: #8E7A5A;
+  --hg-dark-gold: #AFA490;
+  --hg-cream: #1C1A17;
 
   --bg-main: var(--bg-panel);
   --text-main: var(--text-primary);
@@ -78,28 +98,37 @@ body {
   color: var(--text-secondary) !important;
 }
 
+[data-theme="light"] .text-gray-500,
+[data-theme="light"] .text-gray-400 {
+  color: #83755E !important;
+}
+
 [data-theme="light"] .bg-\[\#0A0A0A\],
-[data-theme="light"] .bg-black\/10 {
+[data-theme="light"] .bg-black\/10,
+[data-theme="light"] .bg-black {
   background-color: var(--bg-panel) !important;
 }
 
 [data-theme="light"] .bg-\[\#0F0F0F\],
-[data-theme="light"] .bg-black\/40 {
+[data-theme="light"] .bg-\[\#0F0F0F\]\/90,
+[data-theme="light"] .bg-black\/40,
+[data-theme="light"] .bg-black\/30,
+[data-theme="light"] .bg-black\/20 {
   background-color: var(--bg-sidebar) !important;
 }
 
-[data-theme="light"] .bg-black\/20,
-[data-theme="light"] .bg-black\/30,
 [data-theme="light"] .bg-black\/25,
 [data-theme="light"] .bg-black\/65,
 [data-theme="light"] .bg-\[\#161616\],
-[data-theme="light"] .bg-\[\#121212\] {
+[data-theme="light"] .bg-\[\#121212\],
+[data-theme="light"] .bg-\[\#111\] {
   background-color: var(--bg-input) !important;
 }
 
 [data-theme="light"] .bg-black\/60,
-[data-theme="light"] .bg-black\/45 {
-  background-color: rgba(0, 0, 0, 0.45) !important;
+[data-theme="light"] .bg-black\/45,
+[data-theme="light"] .bg-black\/35 {
+  background-color: rgba(255, 255, 255, 0.6) !important;
 }
 
 [data-theme="light"] tr.bg-black\/80,
@@ -113,16 +142,26 @@ body {
 [data-theme="light"] .border-\[\#8E7A5A\]\/20,
 [data-theme="light"] .border-\[\#8E7A5A\]\/15,
 [data-theme="light"] .border-\[\#8E7A5A\]\/10,
+[data-theme="light"] .border-\[\#D4AF37\]\/35,
+[data-theme="light"] .border-\[\#D4AF37\]\/30,
+[data-theme="light"] .border-\[\#D4AF37\]\/20,
 [data-theme="light"] .border-white\/5 {
   border-color: var(--border-color) !important;
 }
 
-[data-theme="light"] strong.text-white {
+[data-theme="light"] strong.text-white,
+[data-theme="light"] .font-bold.text-white {
   color: var(--text-primary) !important;
 }
 
-[data-theme="light"] .hover\:bg-white\/5:hover {
+[data-theme="light"] .hover\:bg-white\/5:hover,
+[data-theme="light"] .hover\:bg-black\/50:hover,
+[data-theme="light"] .hover\:border-\[\#D4AF37\]\/45:hover,
+[data-theme="light"] .hover\:border-\[\#D4AF37\]\/40:hover,
+[data-theme="light"] .hover\:border-\[\#D4AF37\]\/35:hover,
+[data-theme="light"] .hover\:border-\[\#D4AF37\]\/30:hover {
   background-color: rgba(142, 122, 90, 0.1) !important;
+  border-color: rgba(142, 122, 90, 0.4) !important;
 }
 
 [data-theme="light"] select,
@@ -132,6 +171,8 @@ body {
   color: var(--text-primary) !important;
   border-color: var(--border-color) !important;
 }
+
+
 
 /* Landing page theme (light/dark) */
 [data-lp-theme="dark"] {
@@ -171,9 +212,25 @@ select option {
   background-color: #0F0F0F !important;
   color: #FFFFFF !important;
 }
-[data-lp-theme="light"] select option {
+
+select option:checked,
+select option:hover {
+  background-color: #D4AF37 !important;
+  color: #000000 !important;
+}
+
+[data-lp-theme="light"] select option,
+[data-theme="light"] select option {
   background-color: #FCFAF6 !important;
   color: #1F1B14 !important;
+}
+
+[data-lp-theme="light"] select option:checked,
+[data-theme="light"] select option:checked,
+[data-lp-theme="light"] select option:hover,
+[data-theme="light"] select option:hover {
+  background-color: #D4AF37 !important;
+  color: #000000 !important;
 }
 
 /* Custom scrollbar */
@@ -229,4 +286,50 @@ select option {
 [data-lp-theme="dark"] .glass-panel {
   background: rgba(31, 27, 20, 0.6) !important;
   border: 1px solid rgba(224, 206, 173, 0.1) !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-zoom-in {
+  animation: zoomIn 0.4s ease-out forwards;
 }

@@ -1,7 +1,46 @@
 import React, { useState, useMemo } from 'react';
 import useErpStore from '../../../store/erpStore';
-import { Package, ShieldAlert, Award, FileText, ArrowRight, Tag, Truck, CheckCircle2 } from 'lucide-react';
+import { Package, ShieldAlert, Award, FileText, ArrowRight, Tag, Truck, CheckCircle2, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+const CustomSelect = ({ value, onChange, options }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="relative w-full" onBlur={(e) => {
+      // Small timeout to allow mousedown to fire on options before closing
+      if (!e.currentTarget.contains(e.relatedTarget)) {
+        setIsOpen(false);
+      }
+    }} tabIndex={-1}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full bg-[#161616] border transition-colors flex justify-between items-center rounded-xl py-2.5 px-3 text-white text-sm cursor-pointer ${isOpen ? 'border-[#D4AF37]' : 'border-[#8E7A5A]/30 hover:border-[#D4AF37]/50'}`}
+      >
+        <span className="truncate">{value}</span>
+        <ChevronDown size={14} className={`shrink-0 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </div>
+      
+      {isOpen && (
+        <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-[#161616] border border-[#D4AF37]/40 rounded-xl overflow-hidden z-50 shadow-2xl shadow-black/50 py-1">
+          {options.map((opt) => (
+            <div
+              key={opt}
+              onMouseDown={(e) => { e.preventDefault(); onChange(opt); setIsOpen(false); }}
+              className={`py-2.5 px-4 text-sm cursor-pointer transition-colors ${
+                opt === value 
+                  ? 'bg-[#D4AF37] text-black font-semibold' 
+                  : 'text-white hover:bg-[#D4AF37]/15 hover:text-[#D4AF37]'
+              }`}
+            >
+              {opt}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Dispatch = () => {
   const { jobCards, updateJobCardStatus } = useErpStore();
@@ -121,27 +160,27 @@ const Dispatch = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-semibold text-[#C5B396] uppercase">Luxury Packaging Case</label>
-                  <select
-                    value={boxSize}
-                    onChange={(e) => setBoxSize(e.target.value)}
-                    className="w-full bg-[#161616] border border-[#8E7A5A]/30 focus:border-[#D4AF37] rounded-xl py-2.5 px-3 text-white text-sm outline-none"
-                  >
-                    <option value="Premium Velvet Box">Premium Velvet Box</option>
-                    <option value="Royal Leatherette Case">Royal Leatherette Case</option>
-                    <option value="Standard Showroom Packing">Standard Showroom Packing</option>
-                  </select>
+                  <CustomSelect 
+                    value={boxSize} 
+                    onChange={setBoxSize} 
+                    options={[
+                      "Premium Velvet Box",
+                      "Royal Leatherette Case",
+                      "Standard Showroom Packing"
+                    ]} 
+                  />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-semibold text-[#C5B396] uppercase">Secured Armored Carrier</label>
-                  <select
-                    value={courierName}
-                    onChange={(e) => setCourierName(e.target.value)}
-                    className="w-full bg-[#161616] border border-[#8E7A5A]/30 focus:border-[#D4AF37] rounded-xl py-2.5 px-3 text-white text-sm outline-none"
-                  >
-                    <option value="Royal Safe Express">Royal Safe Express (Armored)</option>
-                    <option value="Blue Dart Security Cargo">Blue Dart Security Cargo</option>
-                    <option value="DHL Luxury Logistics">DHL Luxury Logistics</option>
-                  </select>
+                  <CustomSelect 
+                    value={courierName} 
+                    onChange={setCourierName} 
+                    options={[
+                      "Royal Safe Express",
+                      "Blue Dart Security Cargo",
+                      "DHL Luxury Logistics"
+                    ]} 
+                  />
                 </div>
               </div>
 

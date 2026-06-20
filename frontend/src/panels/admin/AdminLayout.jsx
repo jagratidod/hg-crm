@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import useErpStore, { ROLES, BRANCHES } from '../../store/erpStore';
 import toast from 'react-hot-toast';
-import { 
-  LayoutDashboard, Wrench, Layers, ClipboardList, Hourglass, 
-  History, ShieldAlert, Package, Calculator, ShoppingCart, 
-  Users, Landmark, Award, PackageCheck, Truck, BookOpen, 
+import {
+  LayoutDashboard, Wrench, Layers, ClipboardList, Hourglass,
+  History, ShieldAlert, Package, Calculator, ShoppingCart,
+  Users, Landmark, Award, PackageCheck, Truck, BookOpen,
   BarChart4, Settings, Menu, Bell, LogOut, ChevronDown,
-  Share2, Sun, Moon, X, ChevronRight
+  Share2, Sun, Moon, X, ChevronRight, ClipboardCheck, ShieldCheck, LifeBuoy
 } from 'lucide-react';
 
 // Import all premium modular pages from panels/admin/pages/
@@ -31,10 +31,13 @@ import Accounts from './pages/Accounts';
 import Reports from './pages/Reports';
 import UserManagement from './pages/UserManagement';
 import AdminSettings from './pages/Settings';
+import Attendance from './pages/Attendance';
+import Subscription from './pages/Subscription';
+import SupportTickets from './pages/SupportTickets';
 
 const AdminLayout = () => {
-  const { 
-    user, role, branch, goldRate, silverRate, rateDirection, tickRates, 
+  const {
+    user, role, branch, goldRate, silverRate, rateDirection, tickRates,
     switchRole, switchBranch, logout, notifications, markAllNotificationsRead,
     theme, toggleTheme
   } = useErpStore();
@@ -86,7 +89,10 @@ const AdminLayout = () => {
     { name: 'Dispatch', path: '/admin/dispatch', icon: Truck },
     { name: 'Accounts', path: '/admin/accounts', icon: BookOpen },
     { name: 'Reports', path: '/admin/reports', icon: BarChart4 },
+    { name: 'Support / Tickets', path: '/admin/support', icon: LifeBuoy },
     { name: 'Administration', path: '/admin/users', icon: Users },
+    { name: 'Attendance', path: '/admin/attendance', icon: ClipboardCheck },
+    { name: 'My Subscription', path: '/admin/subscription', icon: ShieldCheck },
     { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
 
@@ -105,7 +111,7 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen bg-[#0A0A0A] text-white font-sans overflow-hidden select-none">
-      
+
       {/* BG GLOW */}
       <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#D4AF37] opacity-[0.03] blur-[120px] rounded-full pointer-events-none z-0" />
 
@@ -157,7 +163,7 @@ const AdminLayout = () => {
         {/* Nav Items */}
         <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto scrollbar-thin">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path || 
+            const isActive = location.pathname === item.path ||
               (item.path !== '/admin' && location.pathname.startsWith(item.path));
             const Icon = item.icon;
             return (
@@ -167,15 +173,15 @@ const AdminLayout = () => {
                 className={`
                   flex items-center gap-2.5 py-2 px-3 rounded-lg transition-all
                   font-semibold text-[10px] uppercase tracking-wider relative group
-                  ${isActive 
-                    ? 'bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/15 font-bold' 
+                  ${isActive
+                    ? 'bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/15 font-bold'
                     : 'text-[#C5B396] hover:bg-white/5 hover:text-white'
                   }
                 `}
               >
                 <Icon size={15} className="shrink-0" />
                 {(!sidebarCollapsed || mobileOpen) && <span className="truncate">{item.name}</span>}
-                
+
                 {/* Tooltip when sidebar collapsed on desktop */}
                 {sidebarCollapsed && !mobileOpen && (
                   <span className="absolute left-[76px] bg-[#1A1A1A] border border-[#D4AF37]/30 text-[#C5B396] py-1.5 px-3 rounded-lg text-[9px] opacity-0 group-hover:opacity-100 transition-opacity z-[60] pointer-events-none uppercase whitespace-nowrap shadow-xl">
@@ -209,8 +215,8 @@ const AdminLayout = () => {
 
         {/* Logout Footer */}
         <div className="py-2.5 px-3 border-t border-[#8E7A5A]/20 shrink-0">
-          <button 
-            onClick={logout} 
+          <button
+            onClick={logout}
             className="w-full flex items-center justify-center gap-2 py-2 px-3 text-red-400 hover:bg-red-500/10 rounded-lg border border-red-500/15 transition-colors font-bold text-[10px] uppercase tracking-widest"
           >
             <LogOut size={13} />
@@ -223,21 +229,21 @@ const AdminLayout = () => {
           RIGHT CONTENT AREA
       ───────────────────────────────────────── */}
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 min-w-0">
-        
+
         {/* STICKY TOP NAVBAR */}
         <header className="h-14 md:h-16 border-b border-[#8E7A5A]/25 bg-[#0F0F0F]/90 backdrop-blur-md flex items-center justify-between px-3 md:px-5 shrink-0 sticky top-0 z-30 gap-2">
-          
+
           {/* Left: Hamburger + Branch */}
           <div className="flex items-center gap-2 min-w-0">
             {/* Desktop collapse toggle */}
-            <button 
+            <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
               className="p-2 text-[#C5B396] hover:text-white rounded-lg hover:bg-white/5 transition-colors hidden md:flex shrink-0"
             >
               <Menu size={18} />
             </button>
             {/* Mobile open toggle */}
-            <button 
+            <button
               onClick={() => setMobileOpen(true)}
               className="p-2 text-[#C5B396] hover:text-white rounded-lg hover:bg-white/5 transition-colors md:hidden shrink-0"
             >
@@ -264,9 +270,8 @@ const AdminLayout = () => {
                         setBranchOpen(false);
                         toast.success(`Branch → ${b}`);
                       }}
-                      className={`w-full text-left py-2 px-3.5 rounded-lg text-xs font-medium transition-colors ${
-                        branch === b ? 'bg-[#D4AF37] text-black font-bold' : 'text-[#C5B396] hover:bg-white/5 hover:text-white'
-                      }`}
+                      className={`w-full text-left py-2 px-3.5 rounded-lg text-xs font-medium transition-colors ${branch === b ? 'bg-[#D4AF37] text-black font-bold' : 'text-[#C5B396] hover:bg-white/5 hover:text-white'
+                        }`}
                     >
                       {b}
                     </button>
@@ -278,7 +283,7 @@ const AdminLayout = () => {
 
           {/* Right: Metal ticker + actions */}
           <div className="flex items-center gap-1.5 md:gap-3 shrink-0">
-            
+
             {/* Metal price ticker – only large screens */}
             <div className="hidden lg:flex items-center gap-3 text-[10px] font-mono border border-[#8E7A5A]/20 py-1.5 px-3 bg-black/40 rounded-full select-none">
               <div className="flex items-center gap-1">
@@ -295,18 +300,11 @@ const AdminLayout = () => {
               </div>
             </div>
 
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-1.5 md:p-2 text-[#C5B396] hover:text-white rounded-lg hover:bg-white/5 transition-colors"
-              title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-            >
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+
 
             {/* Notifications */}
             <div className="relative" ref={notifRef}>
-              <button 
+              <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
                 className="p-1.5 md:p-2 text-[#C5B396] hover:text-white rounded-lg hover:bg-white/5 transition-colors relative"
               >
@@ -342,14 +340,14 @@ const AdminLayout = () => {
 
             {/* Profile */}
             <div className="relative" ref={profileRef}>
-              <button 
+              <button
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
               >
-                <img 
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" 
-                  alt="Avatar" 
-                  className="w-7 h-7 md:w-8 md:h-8 rounded-lg object-cover border border-[#D4AF37]/30" 
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
+                  alt="Avatar"
+                  className="w-7 h-7 md:w-8 md:h-8 rounded-lg object-cover border border-[#D4AF37]/30"
                 />
                 <div className="text-left hidden sm:block leading-none">
                   <span className="text-xs font-semibold text-white block truncate max-w-[80px] md:max-w-[100px]">{user?.name}</span>
@@ -359,13 +357,13 @@ const AdminLayout = () => {
               </button>
               {profileOpen && (
                 <div className="absolute top-11 right-0 w-48 rounded-xl bg-[#0F0F0F] border border-[#D4AF37]/35 shadow-2xl p-2 space-y-1 z-50 text-left">
-                  <Link 
+                  <Link
                     to="/admin/settings"
                     className="w-full flex items-center gap-2 py-2 px-3 text-[#C5B396] hover:bg-white/5 hover:text-white rounded-lg text-xs"
                   >
                     <Settings size={13} /> Settings
                   </Link>
-                  <button 
+                  <button
                     onClick={logout}
                     className="w-full flex items-center gap-2 py-2 px-3 text-red-400 hover:bg-red-500/10 rounded-lg text-xs"
                   >
@@ -399,7 +397,10 @@ const AdminLayout = () => {
             <Route path="/dispatch" element={<Dispatch />} />
             <Route path="/accounts" element={<Accounts />} />
             <Route path="/reports" element={<Reports />} />
+            <Route path="/support" element={<SupportTickets />} />
             <Route path="/users" element={<UserManagement />} />
+            <Route path="/attendance" element={<Attendance />} />
+            <Route path="/subscription" element={<Subscription />} />
             <Route path="/settings" element={<AdminSettings />} />
           </Routes>
         </main>

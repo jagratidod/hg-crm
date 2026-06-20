@@ -57,13 +57,13 @@ export const BRANCHES = [
 
 // Initial mock inventory data
 const initialInventory = [
-  { id: 'inv_1', category: 'Gold', name: '24K Pure Gold Bullion', sku: 'GLD-24K-BAR', barcode: 'BAR-G1092', rfid: 'RFID-G0192', grossWeight: 10000.0, netWeight: 10000.0, fineWeight: 10000.0, purity: 0.999, karat: 24, stoneWeight: 0, diamondWeight: 0, makingCharges: 0, wastage: 0, finalPrice: 75200000, image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&q=80&w=200' },
-  { id: 'inv_2', category: 'Gold', name: '22K Gold Grain Alloy', sku: 'GLD-22K-GRN', barcode: 'BAR-G2201', rfid: 'RFID-G2201', grossWeight: 5400.0, netWeight: 5400.0, fineWeight: 4950.0, purity: 0.916, karat: 22, stoneWeight: 0, diamondWeight: 0, makingCharges: 100, wastage: 2.5, finalPrice: 3800000, image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&q=80&w=200' },
-  { id: 'inv_3', category: 'Silver', name: '999 Fine Silver Grain', sku: 'SLV-999-GRN', barcode: 'BAR-S099', rfid: 'RFID-S099', grossWeight: 50000.0, netWeight: 50000.0, fineWeight: 50000.0, purity: 0.999, karat: 24, stoneWeight: 0, diamondWeight: 0, makingCharges: 0, wastage: 0, finalPrice: 4250000, image: 'https://images.unsplash.com/photo-1605557202138-097824c3fec2?auto=format&fit=crop&q=80&w=200' },
-  { id: 'inv_4', category: 'Diamond', name: 'Round Brilliant Diamond 0.5ct', sku: 'DMD-RND-050', barcode: 'BAR-D5001', rfid: 'RFID-D5001', grossWeight: 0.1, netWeight: 0.1, fineWeight: 0, purity: 1.0, karat: 0, stoneWeight: 0, diamondWeight: 0.5, makingCharges: 500, wastage: 0, finalPrice: 45000, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=200' },
-  { id: 'inv_5', category: 'Stone', name: 'Natural Oval Emerald 1.2ct', sku: 'STN-EMR-120', barcode: 'BAR-E1202', rfid: 'RFID-E1202', grossWeight: 0.24, netWeight: 0.24, fineWeight: 0, purity: 0.98, karat: 0, stoneWeight: 1.2, diamondWeight: 0, makingCharges: 300, wastage: 0, finalPrice: 18000, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=200' },
-  { id: 'inv_6', category: 'Finished Goods', name: 'Adorn Gold Bridal Choker', sku: 'FG-NCK-G32', barcode: 'BAR-FG001', rfid: 'RFID-FG001', grossWeight: 68.4, netWeight: 62.1, fineWeight: 56.88, purity: 0.916, karat: 22, stoneWeight: 2.1, diamondWeight: 4.2, makingCharges: 450, wastage: 5.0, finalPrice: 512000, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=200' },
-  { id: 'inv_7', category: 'Finished Goods', name: 'Classic Solitaire Engagement Ring', sku: 'FG-RNG-D10', barcode: 'BAR-FG002', rfid: 'RFID-FG002', grossWeight: 4.8, netWeight: 4.6, fineWeight: 3.45, purity: 0.750, karat: 18, stoneWeight: 0, diamondWeight: 1.0, makingCharges: 800, wastage: 3.0, finalPrice: 195000, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=200' }
+  { id: 'inv_1', category: 'Gold', status: 'In Stock', name: '24K Pure Gold Bullion', sku: 'GLD-24K-BAR', barcode: 'BAR-G1092', rfid: 'RFID-G0192', grossWeight: 10000.0, netWeight: 10000.0, fineWeight: 10000.0, purity: 0.999, karat: 24, stoneWeight: 0, diamondWeight: 0, makingCharges: 0, wastage: 0, finalPrice: 75200000, image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&q=80&w=200' },
+  { id: 'inv_2', category: 'Gold', status: 'Low Stock', name: '22K Gold Grain Alloy', sku: 'GLD-22K-GRN', barcode: 'BAR-G2201', rfid: 'RFID-G2201', grossWeight: 5400.0, netWeight: 5400.0, fineWeight: 4950.0, purity: 0.916, karat: 22, stoneWeight: 0, diamondWeight: 0, makingCharges: 100, wastage: 2.5, finalPrice: 3800000, image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&q=80&w=200' },
+  { id: 'inv_3', category: 'Silver', status: 'Reserved', name: '999 Fine Silver Grain', sku: 'SLV-999-GRN', barcode: 'BAR-S099', rfid: 'RFID-S099', grossWeight: 50000.0, netWeight: 50000.0, fineWeight: 50000.0, purity: 0.999, karat: 24, stoneWeight: 0, diamondWeight: 0, makingCharges: 0, wastage: 0, finalPrice: 4250000, image: 'https://images.unsplash.com/photo-1605557202138-097824c3fec2?auto=format&fit=crop&q=80&w=200' },
+  { id: 'inv_4', category: 'Diamond', status: 'Out of Stock', name: 'Round Brilliant Diamond 0.5ct', sku: 'DMD-RND-050', barcode: 'BAR-D5001', rfid: 'RFID-D5001', grossWeight: 0.1, netWeight: 0.1, fineWeight: 0, purity: 1.0, karat: 0, stoneWeight: 0, diamondWeight: 0.5, makingCharges: 500, wastage: 0, finalPrice: 45000, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=200' },
+  { id: 'inv_5', category: 'Stone', status: 'Damaged', name: 'Natural Oval Emerald 1.2ct', sku: 'STN-EMR-120', barcode: 'BAR-E1202', rfid: 'RFID-E1202', grossWeight: 0.24, netWeight: 0.24, fineWeight: 0, purity: 0.98, karat: 0, stoneWeight: 1.2, diamondWeight: 0, makingCharges: 300, wastage: 0, finalPrice: 18000, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=200' },
+  { id: 'inv_6', category: 'Finished Goods', status: 'In Stock', name: 'Adorn Gold Bridal Choker', sku: 'FG-NCK-G32', barcode: 'BAR-FG001', rfid: 'RFID-FG001', grossWeight: 68.4, netWeight: 62.1, fineWeight: 56.88, purity: 0.916, karat: 22, stoneWeight: 2.1, diamondWeight: 4.2, makingCharges: 450, wastage: 5.0, finalPrice: 512000, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=200' },
+  { id: 'inv_7', category: 'Finished Goods', status: 'In Stock', name: 'Classic Solitaire Engagement Ring', sku: 'FG-RNG-D10', barcode: 'BAR-FG002', rfid: 'RFID-FG002', grossWeight: 4.8, netWeight: 4.6, fineWeight: 3.45, purity: 0.750, karat: 18, stoneWeight: 0, diamondWeight: 1.0, makingCharges: 800, wastage: 3.0, finalPrice: 195000, image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=200' }
 ];
 
 // Initial mock job cards
@@ -142,6 +142,14 @@ const initialCustomers = [
   ], notes: 'Enjoys lightweight rose gold collections.' }
 ];
 
+// Initial Attendance Logs
+const initialAttendanceLogs = [
+  { id: 'ATT-001', userId: 'USR-01', userName: 'Rajesh Karigar', date: '2026-05-23', timeIn: '09:02 AM', timeOut: '06:15 PM', locationIn: 'Inside Factory', locationOut: 'Inside Factory', status: 'Present' },
+  { id: 'ATT-002', userId: 'USR-02', userName: 'Mansoor Karigar', date: '2026-05-23', timeIn: '09:15 AM', timeOut: '06:30 PM', locationIn: 'Inside Factory', locationOut: 'Inside Factory', status: 'Late' },
+  { id: 'ATT-003', userId: 'USR-03', userName: 'Amit Mehta', date: '2026-05-23', timeIn: '10:00 AM', timeOut: '05:00 PM', locationIn: 'Outside Factory - Meeting', locationOut: 'Outside Factory - Meeting', status: 'Half-Day' },
+  { id: 'ATT-004', userId: 'USR-04', userName: 'Preeti QC', date: '2026-05-23', timeIn: '08:50 AM', timeOut: null, locationIn: 'Inside Factory', locationOut: null, status: 'Present' }
+];
+
 const useErpStore = create((set, get) => ({
   // Active User / Auth
   user: { id: 'USR-00', name: 'Super Admin', identifier: 'admin_gold' },
@@ -165,6 +173,7 @@ const useErpStore = create((set, get) => ({
   refineryLogs: initialRefineryLogs,
   accountsLedger: initialAccountsLedger,
   customers: initialCustomers,
+  attendanceLogs: initialAttendanceLogs,
   notifications: [
     { id: 1, title: 'QC Mismatch Alert', desc: 'Job Card JC-2026-003 failed weight verification in Stone Setting.', time: '2 mins ago', type: 'error', read: false },
     { id: 2, title: 'Gold Price Spiked', desc: 'Realtime Gold Rate reached Rs.7,520/g (+1.4%).', time: '10 mins ago', type: 'info', read: false },
@@ -416,7 +425,7 @@ const useErpStore = create((set, get) => ({
 
   // Inventory Actions
   addInventoryItem: (item) => set((state) => ({
-    inventory: [{ id: `inv_${state.inventory.length + 1}`, finalPrice: item.grossWeight * get().goldRate + (item.makingCharges || 0), ...item }, ...state.inventory]
+    inventory: [{ id: `inv_${state.inventory.length + 1}`, status: item.status || 'In Stock', finalPrice: item.grossWeight * get().goldRate + (item.makingCharges || 0), ...item }, ...state.inventory]
   })),
 
   editInventoryItem: (id, updatedFields) => set((state) => ({
@@ -531,6 +540,46 @@ const useErpStore = create((set, get) => ({
   addTransaction: (txn) => set((state) => ({
     accountsLedger: [{ id: `TXN-0${state.accountsLedger.length + 1}`, ...txn }, ...state.accountsLedger]
   })),
+
+  // Attendance Actions
+  markAttendance: (userId, userName, location, type) => set((state) => {
+    const today = new Date().toISOString().split('T')[0];
+    const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    
+    if (type === 'Punch In') {
+      const newLog = {
+        id: `ATT-0${state.attendanceLogs.length + 1}`,
+        userId,
+        userName,
+        date: today,
+        timeIn: currentTime,
+        timeOut: null,
+        locationIn: location,
+        locationOut: null,
+        status: 'Present'
+      };
+      
+      setTimeout(() => {
+        get().addNotification('Attendance Marked', `${userName} punched in from ${location}.`, 'success');
+      }, 0);
+
+      return { attendanceLogs: [newLog, ...state.attendanceLogs] };
+    } else if (type === 'Punch Out') {
+      const updatedLogs = state.attendanceLogs.map((log) => {
+        if (log.userId === userId && log.date === today && !log.timeOut) {
+          return { ...log, timeOut: currentTime, locationOut: location };
+        }
+        return log;
+      });
+      
+      setTimeout(() => {
+        get().addNotification('Attendance Marked', `${userName} punched out from ${location}.`, 'success');
+      }, 0);
+
+      return { attendanceLogs: updatedLogs };
+    }
+    return state;
+  }),
 
   // CRM Scheme Installment payment simulation
   paySchemeInstallment: (customerId) => set((state) => {

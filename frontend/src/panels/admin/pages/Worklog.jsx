@@ -1,7 +1,53 @@
 import React, { useState, useMemo } from 'react';
 import useErpStore from '../../../store/erpStore';
-import { ClipboardList, Plus, Search, Calendar, Clock, BarChart4, ClipboardCheck } from 'lucide-react';
+import { ClipboardList, Plus, Search, Calendar, Clock, BarChart4, ClipboardCheck, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+const CustomSelect = ({ value, onChange, options }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Helper to get label
+  const getLabel = (val) => {
+    const opt = options.find(o => typeof o === 'object' ? o.value === val : o === val);
+    return opt ? (typeof opt === 'object' ? opt.label : opt) : val;
+  };
+
+  return (
+    <div className="relative w-full" onBlur={(e) => {
+      if (!e.currentTarget.contains(e.relatedTarget)) setIsOpen(false);
+    }} tabIndex={-1}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full bg-[#161616] border transition-colors flex justify-between items-center rounded-lg py-2 px-3 text-white text-xs cursor-pointer min-w-[140px] ${isOpen ? 'border-[#D4AF37]' : 'border-[#8E7A5A]/20 hover:border-[#D4AF37]/50'}`}
+      >
+        <span className="truncate">{getLabel(value)}</span>
+        <ChevronDown size={14} className={`shrink-0 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </div>
+      
+      {isOpen && (
+        <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-[#161616] border border-[#D4AF37]/40 rounded-lg overflow-hidden z-50 shadow-2xl shadow-black/50 py-1 max-h-60 overflow-y-auto scrollbar-thin">
+          {options.map((opt) => {
+            const optVal = typeof opt === 'object' ? opt.value : opt;
+            const optLabel = typeof opt === 'object' ? opt.label : opt;
+            return (
+              <div
+                key={optVal}
+                onMouseDown={(e) => { e.preventDefault(); onChange(optVal); setIsOpen(false); }}
+                className={`py-2 px-3 text-xs cursor-pointer transition-colors ${
+                  optVal === value 
+                    ? 'bg-[#D4AF37] text-black font-semibold' 
+                    : 'text-white hover:bg-[#D4AF37]/15 hover:text-[#D4AF37]'
+                }`}
+              >
+                {optLabel}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Worklog = () => {
   const { jobCards, users } = useErpStore();
@@ -46,34 +92,32 @@ const Worklog = () => {
       </div>
 
       {/* Filter panel */}
-      <div className="glass-panel p-4 rounded-xl border border-[#8E7A5A]/20 bg-black/30 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="relative z-20 glass-panel p-4 rounded-xl border border-[#8E7A5A]/20 bg-black/30 flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex gap-4 items-center w-full sm:w-auto">
           <div className="flex items-center gap-2">
             <span className="text-xs text-[#C5B396] font-mono">Shift:</span>
-            <select
+            <CustomSelect
               value={shiftFilter}
-              onChange={(e) => setShiftFilter(e.target.value)}
-              className="bg-[#161616] border border-[#8E7A5A]/20 rounded-lg py-2 px-3 text-white text-xs outline-none"
-            >
-              <option value="All">All Shifts</option>
-              <option value="Shift A">Shift A</option>
-              <option value="Shift B">Shift B</option>
-              <option value="General">General Shift</option>
-            </select>
+              onChange={setShiftFilter}
+              options={[
+                { value: 'All', label: 'All Shifts' },
+                { value: 'Shift A', label: 'Shift A' },
+                { value: 'Shift B', label: 'Shift B' },
+                { value: 'General', label: 'General Shift' }
+              ]}
+            />
           </div>
 
           <div className="flex items-center gap-2">
             <span className="text-xs text-[#C5B396] font-mono">Craftsman:</span>
-            <select
+            <CustomSelect
               value={selectedCraftsman}
-              onChange={(e) => setSelectedCraftsman(e.target.value)}
-              className="bg-[#161616] border border-[#8E7A5A]/20 rounded-lg py-2 px-3 text-white text-xs outline-none"
-            >
-              <option value="All">All Craftsmen</option>
-              {users.map(u => (
-                <option key={u.id} value={u.name}>{u.name}</option>
-              ))}
-            </select>
+              onChange={setSelectedCraftsman}
+              options={[
+                { value: 'All', label: 'All Craftsmen' },
+                ...users.map(u => ({ value: u.name, label: u.name }))
+              ]}
+            />
           </div>
         </div>
 

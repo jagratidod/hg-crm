@@ -2,20 +2,67 @@ import React, { useState, useMemo } from 'react';
 import useErpStore from '../../../store/erpStore';
 import { 
   Plus, Search, Filter, Printer, Download, Trash2, 
-  RotateCcw, Sliders, CheckSquare, Square, Package, Tag, Layers
+  RotateCcw, Sliders, CheckSquare, Square, Package, Tag, Layers, ChevronDown
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+const CustomSelect = ({ value, onChange, options }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const getLabel = (val) => {
+    const opt = options.find(o => typeof o === 'object' ? o.value === val : o === val);
+    return opt ? (typeof opt === 'object' ? opt.label : opt) : val;
+  };
+
+  return (
+    <div className="relative w-full" onBlur={(e) => {
+      if (!e.currentTarget.contains(e.relatedTarget)) setIsOpen(false);
+    }} tabIndex={-1}>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full bg-[#161616] border transition-colors flex justify-between items-center rounded-xl py-2.5 px-3 text-white text-sm cursor-pointer min-w-[140px] ${isOpen ? 'border-[#D4AF37]' : 'border-[#8E7A5A]/30 hover:border-[#D4AF37]/50'}`}
+      >
+        <span className="truncate">{getLabel(value)}</span>
+        <ChevronDown size={14} className={`shrink-0 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </div>
+      
+      {isOpen && (
+        <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-[#161616] border border-[#D4AF37]/40 rounded-xl overflow-hidden z-50 shadow-2xl shadow-black/50 py-1 max-h-60 overflow-y-auto scrollbar-thin">
+          {options.map((opt) => {
+            const optVal = typeof opt === 'object' ? opt.value : opt;
+            const optLabel = typeof opt === 'object' ? opt.label : opt;
+            return (
+              <div
+                key={optVal}
+                onMouseDown={(e) => { e.preventDefault(); onChange(optVal); setIsOpen(false); }}
+                className={`py-2.5 px-4 text-sm cursor-pointer transition-colors ${
+                  optVal === value 
+                    ? 'bg-[#D4AF37] text-black font-semibold' 
+                    : 'text-white hover:bg-[#D4AF37]/15 hover:text-[#D4AF37]'
+                }`}
+              >
+                {optLabel}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Inventory = () => {
   const { inventory, addInventoryItem, deleteInventoryItem, goldRate } = useErpStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [statusFilter, setStatusFilter] = useState('All');
   const [selectedItems, setSelectedItems] = useState([]);
   const [isAddOpen, setIsAddOpen] = useState(false);
 
   // Form state for new raw or finished item
   const [newItem, setNewItem] = useState({
     category: 'Gold',
+    status: 'In Stock',
     name: '22K Gold Cast Bullion',
     sku: 'GLD-22K-BULLION',
     barcode: `BAR-G${Date.now().toString().slice(-4)}`,
@@ -38,9 +85,10 @@ const Inventory = () => {
                             item.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             item.barcode.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCat = categoryFilter === 'All' ? true : item.category === categoryFilter;
-      return matchesSearch && matchesCat;
+      const matchesStatus = statusFilter === 'All' ? true : item.status === statusFilter;
+      return matchesSearch && matchesCat && matchesStatus;
     });
-  }, [inventory, searchQuery, categoryFilter]);
+  }, [inventory, searchQuery, categoryFilter, statusFilter]);
 
   const handleCreateItem = (e) => {
     e.preventDefault();
@@ -117,10 +165,10 @@ const Inventory = () => {
       </div>
 
       {/* Advanced filters */}
-      <div className="glass-panel p-4 rounded-xl border border-[#8E7A5A]/20 bg-black/30 flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="relative z-20 glass-panel p-4 rounded-xl border border-[#8E7A5A]/20 bg-black/30 flex flex-col md:flex-row gap-4 items-center justify-between">
         
         {/* Category Tabs */}
-        <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 scrollbar-none flex-shrink-0">
           {['All', 'Gold', 'Silver', 'Diamond', 'Stone', 'Finished Goods'].map(cat => (
             <button
               key={cat}
@@ -136,16 +184,27 @@ const Inventory = () => {
           ))}
         </div>
 
-        {/* Search Input */}
-        <div className="relative w-full md:w-80">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
-          <input
-            type="text"
-            placeholder="Search SKU, Barcode, Material..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#161616] border border-[#8E7A5A]/20 focus:border-[#D4AF37] rounded-xl py-2 px-11 text-white text-xs outline-none"
-          />
+        <div className="flex w-full md:w-auto gap-3 items-center flex-1 justify-end flex-wrap md:flex-nowrap">
+          {/* Status Dropdown */}
+          <div className="w-full md:w-44 flex-shrink-0">
+            <CustomSelect
+              value={statusFilter}
+              onChange={setStatusFilter}
+              options={['All', 'In Stock', 'Out of Stock', 'Low Stock', 'Reserved', 'Damaged']}
+            />
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full md:w-64 flex-shrink-0">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+            <input
+              type="text"
+              placeholder="Search SKU, Barcode, Material..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#161616] border border-[#8E7A5A]/20 focus:border-[#D4AF37] rounded-xl py-2 px-11 text-white text-xs outline-none"
+            />
+          </div>
         </div>
 
       </div>
@@ -162,6 +221,7 @@ const Inventory = () => {
                   </button>
                 </th>
                 <th className="p-4 font-semibold">SKU / Item</th>
+                <th className="p-4 font-semibold">Status</th>
                 <th className="p-4 font-semibold">Barcode / RFID</th>
                 <th className="p-4 font-semibold">Category</th>
                 <th className="p-4 font-semibold text-right">Gross Wt</th>
@@ -190,6 +250,17 @@ const Inventory = () => {
                           <div className="text-[9px] font-mono text-[#C5B396]">{item.sku}</div>
                         </div>
                       </div>
+                    </td>
+                    <td className="p-4">
+                      <span className={`px-2 py-0.5 bg-black/60 border border-[#8E7A5A]/20 text-[9px] font-bold rounded-full ${
+                        item.status === 'In Stock' ? 'text-green-400' :
+                        item.status === 'Low Stock' ? 'text-yellow-400' :
+                        item.status === 'Reserved' ? 'text-blue-400' :
+                        item.status === 'Damaged' ? 'text-red-400' :
+                        'text-gray-400'
+                      }`}>
+                        {item.status}
+                      </span>
                     </td>
                     <td className="p-4 font-mono text-[10px] space-y-0.5 text-gray-400">
                       <div className="flex items-center gap-1"><Tag size={10} className="text-[#D4AF37]" /> {item.barcode}</div>
@@ -268,6 +339,21 @@ const Inventory = () => {
                   </div>
 
                   <div className="space-y-1">
+                    <label className="text-[10px] font-semibold text-[#C5B396] uppercase">Availability Status</label>
+                    <select
+                      value={newItem.status}
+                      onChange={(e) => setNewItem({...newItem, status: e.target.value})}
+                      className="w-full bg-[#161616] border border-[#8E7A5A]/30 focus:border-[#D4AF37] rounded-xl py-2.5 px-3 text-white text-sm outline-none"
+                    >
+                      <option value="In Stock">In Stock</option>
+                      <option value="Out of Stock">Out of Stock</option>
+                      <option value="Low Stock">Low Stock</option>
+                      <option value="Reserved">Reserved</option>
+                      <option value="Damaged">Damaged</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1 col-span-2">
                     <label className="text-[10px] font-semibold text-[#C5B396] uppercase">Item Name</label>
                     <input
                       type="text"

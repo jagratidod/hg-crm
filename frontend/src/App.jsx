@@ -8,6 +8,7 @@ import LandingPage from './panels/landing/LandingPage';
 import LoginScreen from './panels/admin/pages/LoginScreen';
 
 // Unified Luxury Layout
+import SuperAdminLayout from './panels/super-admin/SuperAdminLayout';
 import AdminLayout from './panels/admin/AdminLayout';
 import EmployeeLayout from './panels/employee/EmployeeLayout';
 import InventoryLayout from './panels/inventory/InventoryLayout';
@@ -57,6 +58,13 @@ function App() {
         <Route path="/employee/login" element={<LoginScreen />} />
         <Route path="/inventory/login" element={<LoginScreen />} />
         <Route path="/customer/login" element={<LoginScreen />} />
+
+        {/* Super Admin Portal */}
+        <Route path="/super-admin/*" element={
+          <ProtectedRoute allowedRole="admin">
+            <SuperAdminLayout />
+          </ProtectedRoute>
+        } />
 
         {/* Master Admin Portal: Hosts all 18 Jewellery Manufacturing ERP modules */}
         <Route path="/admin/*" element={
