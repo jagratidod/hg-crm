@@ -83,6 +83,8 @@ body {
   font-family: "Outfit", sans-serif;
   background-color: var(--bg-panel);
   color: var(--text-primary);
+  background-color: var(--bg-panel);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -239,16 +241,22 @@ select option:hover {
   height: 8px;
 }
 
+
 ::-webkit-scrollbar-track {
+  background: var(--bg-main);
   background: var(--bg-main);
 }
 
+
 ::-webkit-scrollbar-thumb {
+  background: var(--hg-dark-gold);
   background: var(--hg-dark-gold);
   border-radius: 4px;
 }
 
+
 ::-webkit-scrollbar-thumb:hover {
+  background: var(--hg-gold-beige);
   background: var(--hg-gold-beige);
 }
 
@@ -256,6 +264,7 @@ select option:hover {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 
 .hide-scrollbar {
   -ms-overflow-style: none;
@@ -270,6 +279,22 @@ select option:hover {
 
 /* Utility to ensure text colors match backgrounds */
 .glass-panel {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--border-color) !important;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* When used inside LandingPage, adapt glass to the selected landing theme */
+[data-lp-theme="light"] .glass-panel {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1px solid rgba(17, 24, 39, 0.12) !important;
+}
+
+[data-lp-theme="dark"] .glass-panel {
+  background: rgba(31, 27, 20, 0.6) !important;
+  border: 1px solid rgba(224, 206, 173, 0.1) !important;
   background: var(--bg-card) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;

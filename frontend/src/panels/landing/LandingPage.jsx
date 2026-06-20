@@ -1064,6 +1064,18 @@ const LandingPage = () => {
   );
 };
 
+const BenefitCard = ({ icon, title, desc }) => (
+  <div className="p-6 md:p-8 rounded-3xl bg-[var(--lp-card)] border border-[var(--lp-border)] hover:border-hg-accent hover:shadow-xl hover:shadow-[#D4AF37]/5 transition-all duration-300 group hover:-translate-y-1.5 flex flex-col justify-between h-full relative overflow-hidden">
+    <div className="absolute -top-6 -right-6 w-20 h-20 bg-hg-accent/5 rounded-full group-hover:scale-150 transition-transform duration-500" />
+    <div>
+      <div className="w-12 h-12 rounded-xl bg-hg-accent/10 text-hg-accent flex items-center justify-center mb-6 group-hover:bg-hg-accent group-hover:text-black transition-colors duration-300 shadow-md shadow-hg-accent/5">
+        {icon}
+      </div>
+      <h3 className="text-lg md:text-xl font-black text-[var(--lp-hero-text)] mb-3 tracking-tight">{title}</h3>
+      <p className="text-[var(--lp-muted)] leading-relaxed text-sm">{desc}</p>
+    </div>
+  </div>
+);
 
 const ContactCard = ({ icon, title, value }) => (
   <div className="group flex items-center gap-4 p-4 rounded-2xl bg-[var(--lp-card)] border border-[var(--lp-border)] hover:border-hg-accent/60 hover:shadow-xl hover:shadow-[#D4AF37]/10 transition-all duration-300 hover:-translate-y-1 w-full">
@@ -1148,6 +1160,11 @@ const Field = ({ label, required, children }) => (
 );
 
 export default LandingPage;
+
+
+
+
+
 
 
 
