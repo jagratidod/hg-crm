@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import useErpStore, { ROLES, BRANCHES } from '../../store/erpStore';
 import toast from 'react-hot-toast';
@@ -11,26 +10,6 @@ import {
   Share2, Sun, Moon, X, ChevronRight, ClipboardCheck, ShieldCheck, LifeBuoy
 } from 'lucide-react';
 
-// Import all premium modular pages from panels/admin/pages/
-import Dashboard from './pages/Dashboard';
-import Manufacturing from './pages/Manufacturing';
-import Departments from './pages/Departments';
-import JobCards from './pages/JobCards';
-import JobworkQueue from './pages/JobworkQueue';
-import JobworkTransfer from './pages/JobworkTransfer';
-import Worklog from './pages/Worklog';
-import LossTracking from './pages/LossTracking';
-import Inventory from './pages/Inventory';
-import Orders from './pages/Orders';
-import POSBilling from './pages/POSBilling';
-import CRM from './pages/CRM';
-import Refinery from './pages/Refinery';
-import QC from './pages/QC';
-import Hallmark from './pages/Hallmark';
-import Dispatch from './pages/Dispatch';
-import Accounts from './pages/Accounts';
-import Reports from './pages/Reports';
-import UserManagement from './pages/UserManagement';
 // Import all premium modular pages from panels/admin/pages/
 import Dashboard from './pages/Dashboard';
 import Manufacturing from './pages/Manufacturing';
@@ -63,33 +42,6 @@ const AdminLayout = () => {
     theme, toggleTheme
   } = useErpStore();
   const location = useLocation();
-
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [branchOpen, setBranchOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-
-  const profileRef = useRef(null);
-  const branchRef = useRef(null);
-  const notifRef = useRef(null);
-
-  // Live gold ticker update simulation
-  useEffect(() => {
-    const interval = setInterval(() => { tickRates(); }, 5000);
-    return () => clearInterval(interval);
-  }, [tickRates]);
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false);
-      if (branchRef.current && !branchRef.current.contains(e.target)) setBranchOpen(false);
-      if (notifRef.current && !notifRef.current.contains(e.target)) setNotificationsOpen(false);
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -157,19 +109,6 @@ const AdminLayout = () => {
   // Short branch name for mobile
   const shortBranch = branch?.split(' ')[0] || 'Branch';
 
-  // Auto-close everything when route changes
-  useEffect(() => {
-    setProfileOpen(false);
-    setBranchOpen(false);
-    setNotificationsOpen(false);
-    setMobileOpen(false);
-  }, [location]);
-
-  const unreadCount = notifications.filter(n => !n.read).length;
-
-  // Short branch name for mobile
-  const shortBranch = branch?.split(' ')[0] || 'Branch';
-
   return (
     <div className="flex h-screen bg-[#0A0A0A] text-white font-sans overflow-hidden select-none">
 
@@ -223,9 +162,6 @@ const AdminLayout = () => {
 
         {/* Nav Items */}
         <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto scrollbar-thin">
-
-        {/* Nav Items */}
-        <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto scrollbar-thin">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path ||
               (item.path !== '/admin' && location.pathname.startsWith(item.path));
@@ -254,7 +190,6 @@ const AdminLayout = () => {
                   </span>
                 )}
               </Link>
-            );
             );
           })}
         </nav>
@@ -467,10 +402,6 @@ const AdminLayout = () => {
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/subscription" element={<Subscription />} />
             <Route path="/settings" element={<AdminSettings />} />
-          </Routes>
-        </main>
-
-      </div>
           </Routes>
         </main>
 

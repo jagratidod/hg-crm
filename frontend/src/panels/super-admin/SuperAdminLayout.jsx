@@ -34,6 +34,7 @@ import AuditLogs from './pages/AuditLogs';
 import SystemMonitoring from './pages/SystemMonitoring';
 import RolesPermissions from './pages/RolesPermissions';
 import LeadsManagement from './pages/LeadsManagement';
+import SuperAdminSettings from './pages/SuperAdminSettings';
 
 const SIDEBAR_ITEMS = [
   { name: 'Dashboard', path: '/super-admin', icon: LayoutDashboard },
@@ -47,6 +48,7 @@ const SIDEBAR_ITEMS = [
   { name: 'Audit Logs', path: '/super-admin/audit-logs', icon: Activity },
   { name: 'System Monitoring', path: '/super-admin/system', icon: Monitor },
   { name: 'Roles & Permissions', path: '/super-admin/roles', icon: ShieldCheck },
+  { name: 'Settings', path: '/super-admin/settings', icon: Settings2 },
 ];
 
 export default function SuperAdminLayout() {
@@ -205,6 +207,7 @@ export default function SuperAdminLayout() {
                 <Route path="/audit-logs" element={<AuditLogs />} />
                 <Route path="/system" element={<SystemMonitoring />} />
                 <Route path="/roles" element={<RolesPermissions />} />
+                <Route path="/settings" element={<SuperAdminSettings />} />
               </Routes>
             </motion.div>
           </AnimatePresence>
