@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children, allowedRole, loginPath = "/admin/login" }) =
   }
   
   // Super Admin can access everything for testing and evaluation
-  if (role !== 'Super Admin' && allowedRole === 'admin' && role !== 'admin') {
+  if (allowedRole && allowedRole !== 'all' && role !== 'Super Admin' && role !== allowedRole) {
     return <Navigate to={loginPath} replace />;
   }
   
@@ -64,14 +64,14 @@ function App() {
 
         {/* Super Admin Portal */}
         <Route path="/super-admin/*" element={
-          <ProtectedRoute allowedRole="admin" loginPath="/super-admin/login">
+          <ProtectedRoute allowedRole="Super Admin" loginPath="/super-admin/login">
             <SuperAdminLayout />
           </ProtectedRoute>
         } />
 
         {/* Master Admin Portal: Hosts all 18 Jewellery Manufacturing ERP modules */}
         <Route path="/admin/*" element={
-          <ProtectedRoute allowedRole="admin">
+          <ProtectedRoute allowedRole="all">
             <AdminLayout />
           </ProtectedRoute>
         } />
